@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节水密码 - 高校节水宣讲员成长地图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a9b7e 0%, #2eb89e 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 25px;
+        }
+
+        .tagline {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 40px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons button {
+            padding: 12px 28px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-buttons button.active {
+            background: white;
+            color: #1a9b7e;
+        }
+
+        .nav-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Content Sections */
+        .content {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .section {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 了解详情 Section */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .info-section h3 {
+            font-size: 22px;
+            color: #1a9b7e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #1a9b7e;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* 四站成长路线 Section */
+        .stations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .station-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f8f7 100%);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid #1a9b7e;
+            transition: all 0.3s ease;
+        }
+
+        .station-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(26, 155, 126, 0.1);
+        }
+
+        .station-card .emoji {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .station-card h4 {
+            font-size: 18px;
+            color: #1a9b7e;
+            margin-bottom: 12px;
+        }
+
+        .station-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* 创新亮点 Section */
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f8f7 100%);
+            padding: 30px;
+            border-radius: 12px;
+            border-top: 4px solid #1a9b7e;
+        }
+
+        .highlight-card .emoji {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .highlight-card h4 {
+            font-size: 18px;
+            color: #1a9b7e;
+            margin-bottom: 12px;
+        }
+
+        .highlight-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* 页面演示 Section */
+        .demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .demo-title {
+            font-size: 28px;
+            color: #1a9b7e;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .demo-phone {
+            position: relative;
+            width: 360px;
+            height: 640px;
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 8px solid #333;
+        }
+
+        .demo-phone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 25px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+
+        .demo-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 35px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .demo-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .demo-image.active {
+            opacity: 1;
+        }
+
+        .demo-nav {
+            display: flex;
+            background: #f5f5f5;
+            border-top: 1px solid #e0e0e0;
+            padding: 12px 0;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-top: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .nav-item.active {
+            color: #1a9b7e;
+            border-top-color: #1a9b7e;
+        }
+
+        .nav-item .emoji {
+            font-size: 18px;
+        }
+
+        .nav-item .label {
+            font-size: 11px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            .info-grid,
+            .stations-grid,
+            .highlights-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .demo-phone {
+                width: 280px;
+                height: 500px;
+            }
+
+            .nav-buttons {
+                gap: 10px;
+            }
+
+            .nav-buttons button {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">💧 节水密码</div>
+            <div class="tagline">2026 科普创意大赛 · 创意类 第三组 No.22</div>
+            <div class="subtitle">高校节水宣讲员成长地图</div>
+            <div style="font-size: 16px; opacity: 0.9; margin-top: 15px;">
+                从「识水」到「讲水」，打造四站成长路线，培养合格的节水宣讲员
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons" style="margin-top: 35px;">
+                <button class="active" onclick="switchTab(0)">📖 了解详情</button>
+                <button onclick="switchTab(1)">🗺️ 四站成长路线</button>
+                <button onclick="switchTab(2)">🎯 创新亮点</button>
+                <button onclick="switchTab(3)">📱 页面演示</button>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Tab 1: 了解详情 -->
+            <div class="section active" id="tab-0">
+                <h2 style="font-size: 28px; color: #1a9b7e; margin-bottom: 40px; text-align: center;">📖 项目介绍</h2>
+
+                <div class="info-grid">
+                    <div class="info-section">
+                        <h3>🎯 设计理念</h3>
+                        <p>「节水密码」是一个面向高校节水宣讲员的创新小程序，将原有资料库组织为「识水→懂水→护水→讲水」的四站成长路线。</p>
+                        <p>通过游戏化的体验设计，帮助大学生从被动了解节水，转变为主动成为节水宣讲员，在宿舍、教室、校园传播节水知识，带动他人践行节水行动。</p>
+                        <p style="color: #1a9b7e; font-weight: 600; margin-top: 20px;">从「知道」到「践行」，从「个人」到「传播」，激励每个学生成为节水使者。</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>👥 目标用户</h3>
+                        <p>高校学生，特别是环保志愿者、学生干部和宿舍长等具有传播意愿的群体。</p>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 28px; color: #1a9b7e; margin-bottom: 40px; text-align: center;">✨ 核心功能</h2>
+
+                <div class="info-grid">
+                    <div class="info-section">
+                        <h3>📊 成长地图</h3>
+                        <p>实时展示用户等级、知识解锁数、实践打卡次数和影响人数，直观看到成长历程。</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>💧 今日微行动</h3>
+                        <p>推荐5分钟内可完成的节水行动，如「检查宿舍水龙头是否滴漏」，简单易执行。</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>🎓 情境知识卡</h3>
+                        <p>将Word资料改为30秒可读的情境卡，包含校园用水、生活误区、政策解码、真实案例。</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>🏅 能力认证</h3>
+                        <p>答题闯关获得徽章：节水侦察员、政策翻译官、宿舍节水官、宣讲应变官。</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>👣 可核验足迹</h3>
+                        <p>记录每次实践行动的类型、地点、成果和照片，展示「我做了什么→影响了谁→带动了什么」。</p>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>🎤 一键开讲包</h3>
+                        <p>选择受众和时长，自动生成宣讲方案、PPT、互动工具和应急方案。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: 四站成长路线 -->
+            <div class="section" id="tab-1">
+                <h2 style="font-size: 28px; color: #1a9b7e; margin-bottom: 40px; text-align: center;">🗺️ 四站成长路线</h2>
+
+                <div class="stations-grid">
+                    <div class="station-card">
+                        <div class="emoji">💧</div>
+                        <h4>01 识水 · 科普密码</h4>
+                        <p>用3分钟，破解一个身边的用水误区。包含校园用水、生活误区、政策解码、真实案例等30秒知识卡。</p>
+                    </div>
+
+                    <div class="station-card">
+                        <div class="emoji">🏅</div>
+                        <h4>02 懂水 · 闯关密码</h4>
+                        <p>通过答题闯关认证成为合格宣讲员。获得「侦察员」「翻译官」「节水官」「应变官」等能力徽章，并查看学院行动榜、传播榜。</p>
+                    </div>
+
+                    <div class="station-card">
+                        <div class="emoji">👣</div>
+                        <h4>03 护水 · 足迹密码</h4>
+                        <p>记录「我做了什么→影响了谁→带动了什么」的行动叙事。上传照片或视频，核验实践成果，看见自己的影响力。</p>
+                    </div>
+
+                    <div class="station-card">
+                        <div class="emoji">🎤</div>
+                        <h4>04 讲水 · 宣讲密码</h4>
+                        <p>5分钟内完成一次节水宣讲。选择受众和时长，一键生成宣讲包（开场、互动、核心内容、行动倡议），还有备课、执行和应急工具。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: 创新亮点 (简化为4条) -->
+            <div class="section" id="tab-2">
+                <h2 style="font-size: 28px; color: #1a9b7e; margin-bottom: 40px; text-align: center;">🎯 创新亮点</h2>
+
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <div class="emoji">🎨</div>
+                        <h4>递进式成长路线</h4>
+                        <p>不是被动浏览资料库，而是按照「识→懂→护→讲」的逻辑递进，引导用户逐步从被动学习转变为主动行动。</p>
+                    </div>
+
+                    <div class="highlight-card">
+                        <div class="emoji">⚡</div>
+                        <h4>微行动激励机制</h4>
+                        <p>将宏大的「节水」目标分解为「5分钟检查一处滴漏」这样的微行动，降低参与门槛，大幅提升完成率。</p>
+                    </div>
+
+                    <div class="highlight-card">
+                        <div class="emoji">📊</div>
+                        <h4>可视化档案与可核验</h4>
+                        <p>海报式展示知识解锁、闯关成绩、实践时长和影响人数。用图像和视频核验足迹，让「影响他人」从口号变成可见的数据。</p>
+                    </div>
+
+                    <div class="highlight-card">
+                        <div class="emoji">🔧</div>
+                        <h4>智能工具与激励体系</h4>
+                        <p>一键生成完整宣讲包，无需自己筹备。个人榜、学院榜、传播榜多维激励，激发团队和集体竞争动力。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: 页面演示 -->
+            <div class="section" id="tab-3">
+                <div class="demo-container">
+                    <h2 class="demo-title">📱 页面演示</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 20px;">点击下方页面标签，查看各站功能演示</p>
+
+                    <div class="demo-phone">
+                        <div class="demo-screen">
+                            <div class="demo-content">
+                                <img src="图片1.jpg" class="demo-image active" alt="地图">
+                                <img src="图片2.jpg" class="demo-image" alt="识水">
+                                <img src="图片3.jpg" class="demo-image" alt="懂水">
+                                <img src="图片4.jpg" class="demo-image" alt="护水">
+                                <img src="图片5.jpg" class="demo-image" alt="讲水">
+                            </div>
+                            <div class="demo-nav">
+                                <div class="nav-item active" onclick="switchDemoImage(0)">
+                                    <div class="emoji">🗺️</div>
+                                    <div class="label">地图</div>
+                                </div>
+                                <div class="nav-item" onclick="switchDemoImage(1)">
+                                    <div class="emoji">💧</div>
+                                    <div class="label">识水</div>
+                                </div>
+                                <div class="nav-item" onclick="switchDemoImage(2)">
+                                    <div class="emoji">🏅</div>
+                                    <div class="label">懂水</div>
+                                </div>
+                                <div class="nav-item" onclick="switchDemoImage(3)">
+                                    <div class="emoji">👣</div>
+                                    <div class="label">护水</div>
+                                </div>
+                                <div class="nav-item" onclick="switchDemoImage(4)">
+                                    <div class="emoji">🎤</div>
+                                    <div class="label">讲水</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>节水密码 · 高校节水宣讲员成长地图</p>
+            <p style="margin-top: 10px;">2026 科普创意大赛 · 创意类 第三组 No.22</p>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(index) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            // Show selected section
+            document.getElementById(`tab-${index}`).classList.add('active');
+
+            // Update button states
+            document.querySelectorAll('.nav-buttons button').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+        }
+
+        function switchDemoImage(index) {
+            // Hide all images
+            document.querySelectorAll('.demo-image').forEach(img => img.classList.remove('active'));
+            // Show selected image
+            document.querySelectorAll('.demo-image')[index].classList.add('active');
+
+            // Update nav item states
+            document.querySelectorAll('.demo-nav .nav-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+    </script>
+<script>window.parent.postMessage({ action: "ready" }, "*"); 
+ 
+window.console = new Proxy(console, {
+  get(target, prop) {
+    if (['log', 'warn', 'error'].includes(prop)) {
+      return new Proxy(target[prop], {
+        apply(fn, thisArg, args) {
+          fn.apply(thisArg, args);
+          window.parent.postMessage({ action: 'console', 
+            type: prop, 
+            args: args.map((arg) => {
+              try {
+                return JSON.stringify(arg).replace(/^["']|["']$/g, '');
+              } catch (e) {
+                return arg;
+              }
+            }) 
+          }, '*');
+        }
+      });
+    }
+    return target[prop];
+  }
+});
+</script></body>
+</html>
